@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+
+{% block head %}
+<title>Login</title>
+{% endblock head %}
+
+{% block content %}
+<div class="flex items-center justify-center">
+
+<form action="{% url 'accounts:login' %}" method="post" class="bg-gray-300 flex  flex-col w-1/4 p-5 space-y-5">
+    {% csrf_token %}
+
+
+    {{form}}
+
+    <button type="submit" class="bg-blue-500 rounded-lg p-2">Login</button>
+</form>
+</div>
+
+{% endblock content %}
