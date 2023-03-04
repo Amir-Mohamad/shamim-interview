@@ -8,6 +8,7 @@ from .managers import UserManager
 class User(AbstractUser):
     username = None
     email = models.EmailField(max_length=125, unique=True)
+    budget = models.BigIntegerField(default=1000000)
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
