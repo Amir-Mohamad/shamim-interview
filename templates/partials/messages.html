@@ -1,6 +1,6 @@
 {% if messages %}
 {% for msg in messages %}
-<div class="bg-green-400 text-center p-5">
+<div class="bg-{{msg.extra_tags }}-400 text-center p-5">
 
     <h2>{{msg}}</h2>
 </div>

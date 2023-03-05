@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Dashboard</title>
+{% endblock head %}
+
+{% block content %}
+<div class="flex items-center justify-center">
+
+<form id="" action="{% url 'core:dashboard' %}" method="post" class="bg-gray-300 flex  flex-col w-1/4 p-5 space-y-5">
+    {% csrf_token %}
+
+
+    {{form.as_p}}
+
+    <button id="add-field-button" type="button" class="bg-blue-500 rounded-lg p-2">Add Employee</button>
+    <button type="submit" class="bg-green-500 rounded-lg p-2">Add</button>
+
+    <div id="dynamic-fields-container" class=" flex flex-col ">
+    </div>
+</form>
+</div>
+
+<script>
+    const container = document.getElementById("dynamic-fields-container");
+    const addButton = document.getElementById("add-field-button");
+    const employeeCount = document.getElementById("id_employee_count");
+
+    let fieldIndex = 0;
+
+    addButton.addEventListener("click", () => {
+        for(let i=1; i <= employeeCount.value; i++) {
+    // name
+    const employee_name_field = document.createElement("input");
+    employee_name_field.setAttribute("type", "text");
+    employee_name_field.setAttribute("placeholder", "Employee Name ?");
+
+    employee_name_field.setAttribute("name", `employee_name_field_${fieldIndex}`);
+    container.appendChild(employee_name_field);
+
+    // hour 
+    const hour_field = document.createElement("input");
+    hour_field.setAttribute("type", "number");
+    hour_field.setAttribute("placeholder", "How many hour ?");
+
+    hour_field.setAttribute("name", `hour_field_${fieldIndex}`);
+    container.appendChild(hour_field);
+
+    // price 
+    const price_field = document.createElement("input");
+    price_field.setAttribute("type", "number");
+    price_field.setAttribute("placeholder", "How much price for each hour ?");
+
+    price_field.setAttribute("name", `price_field_${fieldIndex}`);
+
+    const divider = document.createElement("p");
+    divider.innerHTML = '-------------'
+    container.appendChild(price_field);
+    container.appendChild(divider);
+    fieldIndex++;
+        }
+    });
+</script>
+
+{% endblock content %}
+

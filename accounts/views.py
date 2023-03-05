@@ -13,7 +13,7 @@ User = get_user_model()
 
 
 class RegisterView(View):
-    success_url = reverse_lazy('core:home')
+    success_url = reverse_lazy('core:dashboard')
 
     def get(self, request):
         form = RegisterForm()
@@ -25,7 +25,7 @@ class RegisterView(View):
             cd = form.cleaned_data
             User.objects.create_user(cd['email'], cd['password1'])
             messages.success(
-                request, 'You have successfully registered - PEASE LOGIN TO SITE WITH YOUR EMAIL AND PASSWORD', 'success')
+                request, 'You have successfully registered - PEASE LOGIN TO SITE WITH YOUR EMAIL AND PASSWORD', 'green')
             return redirect('accounts:login')
         return render(request, 'accounts/register.html', {'form': form})
 
@@ -36,7 +36,7 @@ class RegisterView(View):
 class UserLogin(AuthenticatedMixin, message, views.LoginView):
     template_name = 'accounts/login.html'
     success_message = 'Login was successful'
-    success_url = reverse_lazy('core:home')
+    success_url = reverse_lazy('core:dashboard')
 
 
 # Logouting user
@@ -44,5 +44,5 @@ class UserLogout(views.LogoutView):
 
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
-            messages.info(request, 'You are successfully logged out')
+            messages.info(request, 'You are successfully logged out', 'yellow')
         return super().dispatch(request, *args, **kwargs)
