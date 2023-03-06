@@ -23,15 +23,12 @@ class DashboardView(LoginRequiredMixin, View):
 
     def post(self, request):
         form = self.form(request.POST, extra=request.POST['employee_count'])
-        print(request.POST)
         if form.is_valid():
             for i in range(0, 10):  # 10 is the maximum number of dynamic fields
                 employee_name_field = f'employee_name_field_{i}'
                 hour_field = f'hour_field_{i}'
                 price_field = f'price_field_{i}'
-                print(employee_name_field, hour_field, price_field)
                 if employee_name_field and hour_field and price_field in form.cleaned_data:
-                    print('yessssssssssss')
                     cd = form.cleaned_data
                     employee = Employee.objects.create(
                         employer=request.user,
@@ -57,7 +54,6 @@ class PaymentsView(LoginRequiredMixin, View):
 
     def get(self, request):
         payments = Payment.objects.filter(employer=request.user)
-        print(payments)
         return render(request, self.template_name, context={'payments': payments})
 
 
